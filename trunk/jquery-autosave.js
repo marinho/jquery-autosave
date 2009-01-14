@@ -58,7 +58,7 @@ jQuery.fn.autosave = function(params) {
         if (autosave_forms_params[$(this)]['fields'] == undefined) {
             var fields = [];
 
-            $(this).children(':input').each(function(){
+            $(this).find(':input').each(function(){
                 fields.push($(this).attr('name'));
             });
 
@@ -66,6 +66,7 @@ jQuery.fn.autosave = function(params) {
         }
 
         // Make a string with pattern for fields
+        /*
         fields_ptrn = '';
         var len = autosave_forms_params[$(this)]['fields'].length;
         for (var i=0;i<len;i++) {
@@ -77,6 +78,7 @@ jQuery.fn.autosave = function(params) {
             fields_ptrn += pattern;
         }
         autosave_forms_params[$(this)]['fields_ptrn'] = fields_ptrn;
+        */
 
         // Default value for 'hash_id'
         if (autosave_forms_params[$(this)]['hash_id'] == undefined) {
@@ -95,9 +97,12 @@ jQuery.fn.autosave = function(params) {
         show_saved_sessions(this);
         
         // Set 'change' event to fields update auto-saving
-        $(this).children(autosave_forms_params[$(this)]['fields_ptrn']).change(function(){
-            save_form_to_gears(find_form_as_parent(this));
-        });
+        var fields = autosave_forms_params[$(this)]['fields'];
+        for (var i=0;i<fields.length;i++) {
+            $(this).find(':input[name='+fields[i]+']').change(function(){
+                save_form_to_gears(find_form_as_parent(this));
+            });
+        }
     });
 
     // Function that create a new hash id for the form
@@ -137,16 +142,22 @@ jQuery.fn.autosave = function(params) {
     // a JSON string
     function form_values_to_json(form) {
         var dict = {};
-        var fields_ptrn = autosave_forms_params[form]['fields_ptrn'];
+        var fields = autosave_forms_params[form]['fields'];
 
-        $(form).children(fields_ptrn).each(function(){
-            dict[$(this).attr('name')] = $(this).val();
-        });
+        for (var i=0;i<fields.length;i++) {
+            $(form).find(':input[name='+fields[i]+']').each(function(){
+                dict[$(this).attr('name')] = $(this).val();
+            });
+        }
 
+        return JSON.stringify(dict)
+        /*
         var ret = '';
 
         for (var key in dict) {
-            ret += "'" + key + "': '" + dict[key] + "',";
+            var field_value = dict[key].replace('"',"'").replace('\\','\\\\').replace('\n',' ').replace('\r',' ');
+            textOut(key+': '+field_value);
+            ret += '"' + key + '": "' + field_value + '",';
         }
 
         if (ret.charAt(ret.length-1) == ',') {
@@ -154,6 +165,7 @@ jQuery.fn.autosave = function(params) {
         }
 
         return '{' + ret + '}';
+        */
     }
 
     // Function that get the max id from sessions table and increments one
@@ -171,7 +183,6 @@ jQuery.fn.autosave = function(params) {
     function save_form_to_gears(form) {
         // Get field values into a dictionary
         var field_values = form_values_to_json(form);
-
         var hash_id = autosave_forms_params[$(this)]['hash_id'];
         var last_save = new Date().getTime();
 
@@ -277,11 +288,11 @@ function find_form_as_parent(obj) {
 // Function that fills the form fields from a JSON string
 function json_values_to_form(json, form) {
     // Converts JSON to JavaScript object
-    window.eval('var dict = '+json);
+    var dict = window.eval('('+json+')');
 
     for (var key in dict) {
         try {
-            $(form).children(':input[name='+key+']').val(dict[key]);
+            $(form).find(':input[name='+key+']').val(dict[key]);
         } catch (e) {
             textOut('Error on "' + key + '" = "' + dict[key] + '"');
         }
