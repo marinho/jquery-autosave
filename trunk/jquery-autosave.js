@@ -42,6 +42,12 @@ var autosave_forms_params = {};
 var autosave_db = null;
 
 jQuery.fn.autosave = function(params) {
+    if (!window.google || !google.gears) {
+        alert("Warning: To use AutoSave function, you must install Gears "+
+              "first. Go to http://gears.google.com/ and get it for free!");
+        return
+    }
+
     var params = params != undefined ? params : {};
 
     // Run the wrapper for each one form
@@ -151,21 +157,6 @@ jQuery.fn.autosave = function(params) {
         }
 
         return JSON.stringify(dict)
-        /*
-        var ret = '';
-
-        for (var key in dict) {
-            var field_value = dict[key].replace('"',"'").replace('\\','\\\\').replace('\n',' ').replace('\r',' ');
-            textOut(key+': '+field_value);
-            ret += '"' + key + '": "' + field_value + '",';
-        }
-
-        if (ret.charAt(ret.length-1) == ',') {
-            ret = ret.substr(0,ret.length-1);
-        }
-
-        return '{' + ret + '}';
-        */
     }
 
     // Function that get the max id from sessions table and increments one
