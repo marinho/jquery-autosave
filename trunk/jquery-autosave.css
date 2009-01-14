@@ -1,0 +1,16 @@
+div#autosave_sessions {
+    z-index: 1000;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    border: 10px solid #58a;
+    background-color: #eef;
+    width: 500px;
+    font-family: arial, helvetica;
+    font-size: 12pt;
+    padding: 10px;
+}
+
+div#autosave_sessions h3 {
+    margin: 0 0 5px 0;
+}

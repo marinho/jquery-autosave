@@ -1,0 +1,13 @@
+jquery-autosave is a JavaScript JQuery plugin that uses the Google Gears power
+to save the form data using a unique hash code for current URL (or manually
+informed) and allows future use or deletion.
+
+This is useful to avoid users loss data when navigate on the browser before
+they really was wanting (i.e: accidental mouse click or key press).
+
+It is licensed under LGPL and you are free to distribute, modify, copy and use
+since you respect the four points of the free software ideology.
+
+Marinho Brandao
+marinho@gmail.com
+http://marinhobrandao.com/

@@ -1,0 +1,15 @@
+This is a Django project, because Google Gears doesn't work in local files, it
+just needs an HTTP based path.
+
+If you have Python and Django in your machine, just run the project with:
+
+    python manage.py runserver
+
+And loads the following URL in your web browser:
+
+    http://localhost:8000/example1.html
+
+To load a file in the same folder of example project.
+
+If you haven't Django or want to use another way to load, just move those files
+into a web browser documents root and it will work well also.

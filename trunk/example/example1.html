@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>The example 1 is a very very simple test</title>
+        <script src="jquery-packed.js" type="text/javascript"></script>
+        <script src="gears_init.js" type="text/javascript"></script>
+
+        <script src="md5.js" type="text/javascript"></script>
+        <script src="jquery-autosave.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="jquery-autosave.css" type="text/css"/>
+
+        <script src="go_offline.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // Gears initialization
+                init();
+
+                textOut('Gears initialized');
+
+                // AutoSave pluggin wrapper
+                $('form').autosave();
+                //$('form').autosave({'fields': ['id','name']});
+
+                textOut('Autosave wrapper ran')
+            });
+        </script>
+    </head>
+    <body>
+        <h1>A first example</h1>
+        <p>
+        This is a simple example of JQuery AutoSave plugin, that's has been
+        used to test it.
+        </p>
+
+        <form id="test">
+            First name: <input name="first_name"/><br/>
+            Last name: <input name="last_name" type="text"/><br/>
+            Genre: <select name="genre">
+                    <option value="m">Male</option>
+                    <option value="f">Female</option>
+                   </select><br/>
+            <input name="is_staff" type="checkbox"/> Is staff member<br/>
+
+            <p>
+                Why is signing up?<br/>
+                <input name="why" type="radio" value="I want"/>Just because I want<br/>
+                <input name="why" type="radio" value="Dunno"/>I don't know<br/>
+                <input name="why" type="radio" value="Whatever"/>Is not your ass<br/>
+            </p>
+            
+            Your photo: <input name="photo" type="file"/> (this won't work)<br/>
+        </form>
+
+        <h3>Messages history (text out)</h3>
+        <ul id="textout"/>
+    </body>
+</html>
+

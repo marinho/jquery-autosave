@@ -1,0 +1,7 @@
+{
+  "betaManifestVersion": 1,
+  "version": "version 1.0",
+  "entries": [
+      { "url": "gears_init.js"}
+    ]
+}
