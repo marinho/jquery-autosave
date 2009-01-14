@@ -8,6 +8,15 @@ they really was wanting (i.e: accidental mouse click or key press).
 It is licensed under LGPL and you are free to distribute, modify, copy and use
 since you respect the four points of the free software ideology.
 
+Depends on:
+- jQuery (1.2.3 recomended)
+- Google Gears installed
+- Paul Johnston's md5.js
+- JSON.org's json2.js
+- Google's gears_init.js
+- Google Gears initialized ( i.e: go_offline.js -> init(); )
+- manifest.json
+
 Marinho Brandao
 marinho@gmail.com
 http://marinhobrandao.com/
