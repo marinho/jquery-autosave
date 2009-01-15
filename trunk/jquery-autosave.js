@@ -71,21 +71,6 @@ jQuery.fn.autosave = function(params) {
             autosave_forms_params[$(this)]['fields'] = fields;
         }
 
-        // Make a string with pattern for fields
-        /*
-        fields_ptrn = '';
-        var len = autosave_forms_params[$(this)]['fields'].length;
-        for (var i=0;i<len;i++) {
-            // Doesn't accept no named inputs
-            if (!autosave_forms_params[$(this)]['fields'][i]) { continue }
-
-            var name = autosave_forms_params[$(this)]['fields'][i];
-            var pattern = ':input[name=' + name + '],';
-            fields_ptrn += pattern;
-        }
-        autosave_forms_params[$(this)]['fields_ptrn'] = fields_ptrn;
-        */
-
         // Default value for 'hash_id'
         if (autosave_forms_params[$(this)]['hash_id'] == undefined) {
             autosave_forms_params[$(this)]['hash_id'] = create_hash_from_url(window.location.href);
@@ -109,6 +94,15 @@ jQuery.fn.autosave = function(params) {
                 save_form_to_gears(find_form_as_parent(this));
             });
         }
+
+        // Event for form submittion. When the form is submited, the current session must be removed
+        $(this).submit(function(){
+            // Go ahead only if there is a session in action
+            if (!autosave_forms_params[$(this)]['session_id']) return
+            
+            // Remove the current session
+            remove_saved_session(autosave_forms_params[$(this)]['session_id'], this)
+        });
     });
 
     // Function that create a new hash id for the form
@@ -142,8 +136,6 @@ jQuery.fn.autosave = function(params) {
         textOut('Database initialized!');
     }
 
-    // TODO: event that starts a new session or load an existing
-    
     // Function that loads the field values from a form and returns
     // a JSON string
     function form_values_to_json(form) {
